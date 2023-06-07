@@ -1,16 +1,16 @@
 package com.example.bdia.model.dto;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
 @Getter
 public class CreateAuthorDto {
-    @NotNull
-    @Size(min = 3, max = 32)
     private String firstName;
     private String secondName;
-    @NotNull
-    @Size(min = 3, max = 32)
     private String familyName;
 }

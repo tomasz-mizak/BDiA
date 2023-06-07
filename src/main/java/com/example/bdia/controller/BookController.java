@@ -4,12 +4,12 @@ import com.example.bdia.model.converter.Book2BookDtoConverter;
 import com.example.bdia.model.dto.BookDto;
 import com.example.bdia.model.dto.CreateBookDto;
 import com.example.bdia.service.BookService;
-import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/book")
@@ -24,10 +24,17 @@ public class BookController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<BookDto> createBook(@Valid @RequestBody CreateBookDto createBookDto) {
+    public ResponseEntity<BookDto> createBook(@RequestBody CreateBookDto createBookDto) {
         return ResponseEntity.status(201)
                 .body(book2BookDtoConverter.convert(
                         bookService.createBook(createBookDto)));
+    }
+
+    @GetMapping(value = "/all")
+    public ResponseEntity<List<BookDto>> getAllBooks() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(bookService.getAllBooks().stream()
+                        .map(book2BookDtoConverter::convert).collect(Collectors.toList()));
     }
 
 }

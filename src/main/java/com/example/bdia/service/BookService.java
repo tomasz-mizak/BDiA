@@ -4,8 +4,11 @@ import com.example.bdia.model.Author;
 import com.example.bdia.model.Book;
 import com.example.bdia.model.dto.CreateBookDto;
 import com.example.bdia.repository.BookRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -14,6 +17,8 @@ public class BookService {
     private final BookRepository bookRepository;
     private final AuthorService authorService;
 
+
+    @Transactional
     public Book createBook(CreateBookDto createBookDto) {
 
         Book book = new Book();
@@ -21,6 +26,7 @@ public class BookService {
         book.setTitle(createBookDto.getTitle());
 
         if (createBookDto.getAuthor().getId() != null) {
+            System.out.println("TEST: " + createBookDto.getAuthor().getId());
             book.setAuthor(authorService.findAuthor(createBookDto.getAuthor().getId()));
         } else {
             book.setAuthor(authorService.createAuthor(createBookDto.getAuthor()));
@@ -36,6 +42,10 @@ public class BookService {
         book.setNumberOfPages(createBookDto.getNumberOfPages());
 
         return bookRepository.save(book);
+    }
+
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
     }
 
 }

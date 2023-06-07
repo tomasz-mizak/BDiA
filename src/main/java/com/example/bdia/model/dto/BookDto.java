@@ -1,6 +1,5 @@
 package com.example.bdia.model.dto;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @AllArgsConstructor
