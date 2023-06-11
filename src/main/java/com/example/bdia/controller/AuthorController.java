@@ -4,6 +4,7 @@ import com.example.bdia.model.converter.Author2AuthorDtoConverter;
 import com.example.bdia.model.dto.AuthorDto;
 import com.example.bdia.model.dto.CreateAuthorDto;
 import com.example.bdia.service.AuthorService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,7 @@ public class AuthorController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<AuthorDto> createAuthor(@RequestBody CreateAuthorDto createAuthorDto) {
+    public ResponseEntity<AuthorDto> createAuthor(@RequestBody @Valid CreateAuthorDto createAuthorDto) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(author2AuthorDtoConverter.convert(authorService.createAuthor(createAuthorDto)));
     }
